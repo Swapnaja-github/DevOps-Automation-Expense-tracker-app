@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: redis-statefulset
+  namespace: expensy
 spec:
   serviceName: "redis-service"
   replicas: 2
@@ -26,7 +27,7 @@ spec:
       name: redis-storage
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: gp2
+      storageClassName: managed-csi
       resources:
         requests:
           storage: 1Gi

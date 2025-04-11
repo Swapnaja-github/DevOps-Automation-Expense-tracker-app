@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongodb-statefulset
+  namespace: expensy
 spec:
   serviceName: "mongodb-service"  
   replicas: 2
@@ -38,10 +39,10 @@ spec:
       name: mongo-storage
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: gp2 # Kubernetes dynamically provisions an EBS-backed volume
       resources:
         requests:
           storage: 3Gi
+      storageClassName: managed-csi # use Azure’s built-in CSI-based storage class to dynamically provision a managed disk
     
 ---
 apiVersion: v1
