@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: expensy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend-container
+          image: sjagtap0/backend
+          ports:
+            - containerPort: 8706
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: expensy-secrets
+                  key: MONGO_INITDB_ROOT_USERNAME
+
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: expensy-secrets
+                  key: MONGO_INITDB_ROOT_PASSWORD
+                  
+            - name: DATABASE_URI
+              value: mongodb://mongo:mongo@mongodb-service:27017/?authSource=admin
+
+            - name: REDIS_PORT
+              value: "6379"
+
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: expensy-secrets
+                  key: REDIS_HOST
+
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: expensy-secrets
+                  key: REDIS_PASSWORD
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 8707
+      targetPort: 8706
+  type: ClusterIP

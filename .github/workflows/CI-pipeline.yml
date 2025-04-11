@@ -1,0 +1,34 @@
+name: CI Pipeline
+run-name: ${{ github.actor }} is Deploying
+
+on:
+  push:
+    branches: 
+      - swap-feature-branch
+    tags:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  build-test-and-docker:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || github.sha }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker images
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest ./expensy_frontend
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest ./expensy_backend
+      - name: Push Docker images
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
