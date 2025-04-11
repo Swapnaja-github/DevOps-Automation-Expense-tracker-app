@@ -58,6 +58,6 @@ spec:
   selector:
     app: backend
   ports:
-    - port: 8707
+    - port: 8706
       targetPort: 8706
   type: ClusterIP
