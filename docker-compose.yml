@@ -12,7 +12,7 @@ services:
       - REDIS_PORT=${REDIS_PORT}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
-      - "8707:8706"   # Expose backend on port 8707 locally
+      - ${BACKEND_PORT}:8706"   # Expose backend on port 8707 locally
     depends_on:
       - redis           # Ensure Redis is available before starting the backend
       - mongo           # Ensure MongoDB is available before starting the backend
