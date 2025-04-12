@@ -42,7 +42,7 @@ spec:
             #     secretKeyRef:
             #       name: expensy-secrets
             #       key: REDIS_HOST
-            - name: REDIS_PORT
+            - name: REDIS_HOST
               value: redis-service
             - name: REDIS_PASSWORD
               valueFrom:
