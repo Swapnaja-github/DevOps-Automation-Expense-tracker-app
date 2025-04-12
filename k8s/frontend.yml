@@ -17,10 +17,10 @@ spec:
         - name: frontend-container
           image: sjagtap0/frontend
           ports:
-            - containerPort: 3002
+            - containerPort: 3000
           env:
             - name: NEXT_PUBLIC_API_URL
-              value: "http://backend-service:8706"  # The backend service URL
+              value: "http://backend-service:8706"  # Kubernetes internal DNS name, not publicly reachable- only for intra-cluster comm.
 ---
 apiVersion: v1
 kind: Service
@@ -31,6 +31,6 @@ spec:
     app: frontend
   ports:
     - protocol: TCP
-      port: 3002
-      targetPort: 3002
+      port: 3000
+      targetPort: 3000
   type: ClusterIP
