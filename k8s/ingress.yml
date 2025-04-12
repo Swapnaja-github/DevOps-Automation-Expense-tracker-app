@@ -3,11 +3,12 @@ kind: Ingress
 metadata:
   name: expensy-ingress
   namespace: expensy
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-    - host: 20.203.52.255.nip.io
-      http:
+    - http:
         paths:
           - path: /expensy
             pathType: Prefix
@@ -17,13 +18,6 @@ spec:
                 port:
                   number: 3000
           - path: /
-            pathType: Exact
-            backend:
-                service:
-                  name: frontend-service
-                  port:
-                    number: 3000
-          - path: /static
             pathType: Prefix
             backend:
               service:

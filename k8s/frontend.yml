@@ -4,7 +4,7 @@ metadata:
   name: frontend-deployment
   namespace: expensy
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: frontend
@@ -31,6 +31,6 @@ spec:
     app: frontend
   ports:
     - protocol: TCP
-      port: 3000
+      port: 3000 # frontend-service exposes port 3000 and targeting port 3000 on the pod
       targetPort: 3000
   type: ClusterIP

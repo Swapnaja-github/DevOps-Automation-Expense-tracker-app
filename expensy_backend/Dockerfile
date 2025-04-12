@@ -20,7 +20,7 @@ ENV REDIS_PASSWORD=""
 
 
 # expose the app port 
-EXPOSE 8707
+EXPOSE 8706
 
 # start the app
 CMD ["npm", "start"] 
