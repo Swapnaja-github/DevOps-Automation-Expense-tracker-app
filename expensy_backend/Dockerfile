@@ -14,7 +14,7 @@ COPY . .
 
 # Set default environment variables for both the Redis and MongoDB connection
 ENV DATABASE_URI="mongodb://<username>:<password>@<host>:<port>?authSource=admin"
-ENV REDIS_HOST="redis"
+ENV REDIS_HOST=""
 ENV REDIS_PORT="6379"
 ENV REDIS_PASSWORD=""
 

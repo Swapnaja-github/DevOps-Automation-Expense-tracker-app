@@ -37,12 +37,13 @@ spec:
             - name: REDIS_PORT
               value: "6379"
 
-            - name: REDIS_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: expensy-secrets
-                  key: REDIS_HOST
-
+            # - name: REDIS_HOST
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: expensy-secrets
+            #       key: REDIS_HOST
+            - name: REDIS_PORT
+              value: redis-service
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
