@@ -1,0 +1,42 @@
+    name: CD Pipeline
+    # Provisions an AKS cluster and deploys (or updates) the Kubernetes manifests on AKS
+    
+    on:
+      workflow_run:
+        workflows:
+          - CI Pipeline
+        types:
+          - completed
+    
+    
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0  # Ensures all files are downloaded
+
+            - name: Install Azure CLI
+              uses: azure/setup-az-cli@v1
+    
+            - name: Install kubectl
+              run: |
+                sudo az aks install-cli
+                kubectl version --client
+              
+            - name: Login to Azure
+              uses: azure/login@v1
+              with:
+                creds: ${{ secrets.AZURE_CREDENTIALS }}
+              
+            - name: Connect to AKS Cluster
+              run:  az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} --name ${{ secrets.AKS_CLUSTER_NAME }}
+
+            - name: Verify cluster access
+              run: kubectl get nodes
+    
+            - name: Deploy workloads to AKS in expensy namespace
+              run: |
+                kubectl apply -f k8s/ -n expensy
