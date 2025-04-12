@@ -65,6 +65,8 @@ az deployment group create \
   --template-file aks-cluster.bicep \
   --parameters sshPublicKey="$(cat ~/.ssh/id_rsa.pub)"
 ```
+If necessary:
+``` ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa```
 
 3. Get credentials for kubectl access
 ```az aks get-credentials --resource-group expensyAksRG --name expensyAksCluster ```
