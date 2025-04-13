@@ -26,12 +26,13 @@ jobs:
 
       - name: Build Docker images
         run: |
-#      docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest ./expensy_frontend
 
           docker build \
           --build-arg NEXT_PUBLIC_API_URL=http://backend-service:8706 \
           -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest ./expensy_frontend
+    
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest ./expensy_backend
+
       - name: Push Docker images
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
