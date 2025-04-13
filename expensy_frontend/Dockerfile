@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Step 6: Set the API URL that will be embedded into the frontend
-ENV NEXT_PUBLIC_API_URL="http://backend-service:8706"
+ENV NEXT_PUBLIC_API_URL="http://localhost:8706"
 
 # Step 7: Build the Next.js app (production build)
 RUN npm run build
