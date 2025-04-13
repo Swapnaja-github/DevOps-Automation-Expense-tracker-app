@@ -13,8 +13,9 @@ RUN npm install
 COPY . .
 
 # Set default environment variables for both the Redis and MongoDB connection
+# # Instead of localhost, use conatiner name if running locally in a docker network, and in kubernetes redis service name
 ENV DATABASE_URI="mongodb://<username>:<password>@<host>:<port>?authSource=admin"
-ENV REDIS_HOST="redis"
+ENV REDIS_HOST="localhost"
 ENV REDIS_PORT="6379"
 ENV REDIS_PASSWORD=""
 

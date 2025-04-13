@@ -18,36 +18,24 @@ spec:
           image: sjagtap0/backend
           ports:
             - containerPort: 8706
-          env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: expensy-secrets
-                  key: MONGO_INITDB_ROOT_USERNAME
-
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: expensy-secrets
-                  key: MONGO_INITDB_ROOT_PASSWORD
-                  
+          env:           
             - name: DATABASE_URI
-              value: mongodb://mongo:mongo@mongodb-service:27017/?authSource=admin
+              valueFrom:
+                secretKeyRef:
+                  name: expensy-secrets
+                  key: DATABASE_URI
 
             - name: REDIS_PORT
               value: "6379"
 
             - name: REDIS_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: expensy-secrets
-                  key: REDIS_HOST
+              value: "redis-service" # Reference the corresponding service name
 
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: expensy-secrets
-                  key: REDIS_PASSWORD
+                  key: redis-password
 
 ---
 apiVersion: v1
