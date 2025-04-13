@@ -4,7 +4,7 @@ metadata:
   name: expensy-ingress
   namespace: expensy
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
@@ -24,3 +24,10 @@ spec:
                 name: frontend-service
                 port:
                   number: 3000
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-service  # Backend service for path /api
+                port:
+                  number: 8706  # Port exposed by the backend service
