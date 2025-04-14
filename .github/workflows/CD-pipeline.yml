@@ -8,6 +8,8 @@
           - CI Pipeline
         types:
           - completed
+        branches:
+          - main
        
     jobs:
       deploy:
