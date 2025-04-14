@@ -9,7 +9,7 @@
         types:
           - completed
         branches:
-          - main
+          - dev
        
     jobs:
       deploy:
@@ -21,7 +21,7 @@
                 fetch-depth: 0  # Ensures all files are downloaded
 
             - name: Install Azure CLI
-              run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+              uses: azure/setup-cli@v1 # or run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
             - name: Verify Installation
               run: |
                 az --version
