@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: backend-monitor
+  namespace: monitoring  # Prometheus is running in the same namespace
+  labels:
+    release: kube-prometheus-stack # Prometheus helm release name 
+spec:
+  selector:
+    matchLabels:
+      app: backend # Prometheus to look for services in the expensy namespace that have the label app: backend
+  namespaceSelector:
+    matchNames:
+      - expensy 
+  endpoints:
+    - port: http
+      path: /metrics # scrape the /metrics path on port named http every 15 seconds
+      interval: "15s"

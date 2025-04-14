@@ -46,6 +46,7 @@ spec:
   selector:
     app: backend
   ports:
-    - port: 8706
-      targetPort: 8706
+    - name: http # port label
+      port: 8706 # external port exposed by the service
+      targetPort: 8706 # actual port inside the pod 
   type: ClusterIP
