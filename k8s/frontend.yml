@@ -16,11 +16,9 @@ spec:
       containers:
         - name: frontend-container
           image: sjagtap0/frontend
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000 # overwrites the port exposed in frontend Docker file
-          env:
-            - name: NEXT_PUBLIC_API_URL
-              value: "http://backend-service:8706"  # Kubernetes internal DNS name, not publicly reachable- only for intra-cluster comm.
 ---
 apiVersion: v1
 kind: Service
