@@ -27,7 +27,7 @@ jobs:
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest . --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest ./expensy_frontend --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest ./expensy_backend
 
       - name: Push Docker images
