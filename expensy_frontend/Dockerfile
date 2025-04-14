@@ -15,7 +15,13 @@ COPY . .
 
 # Step 6: Set the API URL that will be embedded into the frontend
 # Instead of localhost, use conatiner name if running locally in a docker network, and in kubernetes backend service name
-ENV NEXT_PUBLIC_API_URL="http://localhost:8706"
+#ENV NEXT_PUBLIC_API_URL="http://localhost:8706"
+
+# Define build arg
+ARG NEXT_PUBLIC_API_URL
+
+# Make it available as an environment variable . This ensures NEXT_PUBLIC_API_URL is injected at build time and available during npm run build
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 # Step 7: Build the Next.js app (production build)
 RUN npm run build
