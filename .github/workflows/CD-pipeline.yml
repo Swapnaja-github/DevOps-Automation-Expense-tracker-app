@@ -21,7 +21,10 @@
                 fetch-depth: 0  # Ensures all files are downloaded
 
             - name: Install Azure CLI
-              uses: Azure/setup-azcli@v1
+              run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+            - name: Verify Installation
+              run: |
+                az --version
     
             - name: Install kubectl
               run: |
