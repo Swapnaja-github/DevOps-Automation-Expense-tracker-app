@@ -10,35 +10,50 @@ expensyAksCluster
 
 ## 🚀 Deployment Steps
 
-Installation-
-### 1. Add the Helm Chart Repository
+### Step A: Add Helm Repositories
+# 1. Add the Prometheus Community Rep
+
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-
 helm repo update
 ```
 
-### 2.Install the kube-prometheus-stack-
+# 2. (Optional) Add the Stable Charts Repository
+
 ```
-helm install monitoring prometheus-community/kube-prometheus-stack --namespace expensy
+helm repo add stable https://charts.helm.sh/stable
+helm repo update
+
 ```
 
-### 3.Access Grafana UI-
-You can port-forward to access Grafana locally:
+### Step B: Create a Namespace for Monitoring
+```
+kubectl create namespace prometheus
+```
+### Step C: Install the kube-prometheus-stack
+
+### Step 1: Deploy Prometheus and Grafana using Helm:
+
+```
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack -n prometheus
+
+```
+### Step 2: Verify Deployment:
+
+```
+kubectl get pods -n prometheus
+kubectl get svc -n prometheus
+
 ```
 
-```kubectl port-forward svc/monitoring-grafana -n expensy 3000:80```
-
-Then open: http://localhost:3000
-
-Default credentials:
-
-Username: admin
-Password: prom-operator
+### Step D: Expose Prometheus and Grafana Outside the Cluster
+### Step 1:Edit the Prometheus Service:
 ```
-### 4.Explore Prometheus-
+kubectl get svc -n prometheus
+kubectl edit svc kube-prometheus-stack-prometheus -n prometheus
 ```
-kubectl port-forward svc/monitoring-kube-prometheus-prometheus -n expensy 9090
 
-Open http://localhost:9090
+### Step 2:Edit the Grafana Service
+```
+kubectl edit svc kube-prometheus-stack-grafana -n prometheus
 ```
