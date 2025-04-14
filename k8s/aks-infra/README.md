@@ -1,4 +1,4 @@
-# Cluster deployment via Azure CLI
+# Option A- Cluster deployment via Azure CLI
 
 ## Login to Azure
 ```az login```
@@ -46,7 +46,7 @@ Verify Deletion:
 ```az group list --output table```
 
 ---
-# Cluster deployment via bicep file 
+# Option B-Cluster deployment via bicep file 
 1. Create-rg.bicep
 
 Deploy this at the subscription level:

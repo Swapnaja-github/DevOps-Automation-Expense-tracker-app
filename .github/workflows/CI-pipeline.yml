@@ -4,7 +4,7 @@ run-name: ${{ github.actor }} is Deploying
 on:
   push:
     branches: 
-      - swap-feature-branch
+      - dev
     tags:
       - '*'
   workflow_dispatch:
