@@ -1,4 +1,5 @@
     name: CD Pipeline
+    run-name: ${{ github.actor }} is Deploying
     # Provisions an AKS cluster and deploys (or updates) the Kubernetes manifests on AKS
     
     on:
@@ -7,8 +8,7 @@
           - CI Pipeline
         types:
           - completed
-    
-    
+       
     jobs:
       deploy:
         runs-on: ubuntu-latest
