@@ -21,7 +21,7 @@
                 fetch-depth: 0  # Ensures all files are downloaded
 
             - name: Install Azure CLI
-              uses: azure/setup-az-cli@v1
+              uses: Azure/setup-azcli@v1
     
             - name: Install kubectl
               run: |
