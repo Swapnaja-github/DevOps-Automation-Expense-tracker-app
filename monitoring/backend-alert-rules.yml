@@ -1,0 +1,46 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: backend-alert-rules
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack # installed Helm release
+    role: alert-rules
+spec:
+  groups:
+    - name: backend.rules
+      rules:
+        - alert: TooFewExpenses
+          expr: expenses_total < 3
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Too few expenses recorded"
+            description: "Less than 3 expenses recorded in the last 5 minutes."
+
+        - alert: HighFailedAPICalls
+          expr: increase(http_requests_total{statusCode="500"}[5m]) > 3
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "High number of failed API calls"
+            description: "More than 3 failed API calls (500) in the last 5 minutes."
+        
+        - alert: MongoDBConnectionLost
+          expr: mongo_connection_status == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "MongoDB connection lost"
+
+        - alert: HighMemoryUsage
+          expr: (process_resident_memory_bytes / process_virtual_memory_bytes) > 0.9
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Memory usage exceeds 90%"
+

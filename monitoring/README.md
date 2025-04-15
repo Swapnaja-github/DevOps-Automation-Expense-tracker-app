@@ -63,3 +63,39 @@ In the editor, change the type: field from ClusterIP to LoadBalancer, then save 
 kubectl edit svc kube-prometheus-stack-grafana -n monitoring
 ```
 Similarly for Grafan, change the type: field from ClusterIP to LoadBalancer. Save and exit.
+
+---
+# Metrics in Grafana Dashboards
+
+## Backend Metrics
+1. ```mongo_connection_status``` (Type: gauge)
+2. ```expenses_total``` (Type: counter)
+(Total number of expenses recorded in the DB)
+3. ```http_requests_overall_total``` (Type: counter)
+(Cumulative number of HTTP requests since the app started)
+4. ```http_requests_total{method=..., route=..., statusCode=...}``` </br>
+    Usage: 
+    -  Group by statusCode to track errors (rate(http_requests_total{statusCode=~"5.."}[1m]))
+    -  Track specific routes or high error endpoints.
+
+### ⚙️ Node.js & Process-Level Metrics
+#### CPU Metrics
+- ```process_cpu_user_seconds_total```
+- ```process_cpu_system_seconds_total```
+- ```process_cpu_seconds_total```
+
+These show how much CPU time (in seconds) the app has used in total (use rate() in Prometheus to get % CPU usage over time).
+
+#### Memory Metrics
+- ```process_resident_memory_bytes```: actual RAM used.
+- ```process_virtual_memory_bytes```: total virtual memory used.
+- ```process_heap_bytes```: JS heap memory allocated.
+- ```nodejs_heap_size_used_bytes``` vs ```nodejs_heap_size_total_bytes```: how much heap is in use vs allocated.
+
+Useful for tracking memory leaks or usage over time.
+
+#### Open File Descriptors
+- ```process_open_fds```: number of files/sockets currently open.
+- ```process_max_fds```: system-imposed max.
+
+Important to monitor in case your backend hits limits under load.
