@@ -1,3 +1,4 @@
+# This PrometheusRule for backend service includes Business alerts (e.g., too few expenses) & Technical alerts (e.g., failed API calls, MongoDB connection alert)
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
@@ -8,7 +9,7 @@ metadata:
     role: alert-rules
 spec:
   groups:
-    - name: backend.rules
+    - name: backend-business-rules
       rules:
         - alert: TooFewExpenses
           expr: expenses_total < 3
@@ -25,9 +26,11 @@ spec:
           labels:
             severity: critical
           annotations:
-            summary: "High number of failed API calls"
-            description: "More than 3 failed API calls (500) in the last 5 minutes."
-        
+            summary: "Spike in failed API calls"
+            description:  "More than 3 failed API calls (500) in the last 5 minutes."
+
+    - name: backend-health-checks
+      rules:
         - alert: MongoDBConnectionLost
           expr: mongo_connection_status == 0
           for: 1m
@@ -35,7 +38,19 @@ spec:
             severity: critical
           annotations:
             summary: "MongoDB connection lost"
+            description: "The backend reports MongoDB connection status as DOWN."
 
+        - alert: HighEventLoopLag
+          expr: nodejs_eventloop_lag_max_seconds > 0.5
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High Node.js event loop lag"
+            description: "Max event loop lag is over 0.5s, which may affect performance."
+    
+    - name: resource-usage-checks
+      rules:
         - alert: HighMemoryUsage
           expr: (process_resident_memory_bytes / process_virtual_memory_bytes) > 0.9
           for: 1m
@@ -43,4 +58,8 @@ spec:
             severity: warning
           annotations:
             summary: "Memory usage exceeds 90%"
+
+
+
+
 
