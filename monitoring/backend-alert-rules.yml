@@ -5,7 +5,7 @@ metadata:
   name: backend-alert-rules
   namespace: monitoring
   labels:
-    release: kube-prometheus-stack # installed Helm release
+    release: kube-prometheus-stack # installed Helm release, required for Prometheus to pick this rule up
     role: alert-rules
 spec:
   groups:
@@ -52,12 +52,23 @@ spec:
     - name: resource-usage-checks
       rules:
         - alert: HighMemoryUsage
-          expr: (process_resident_memory_bytes / process_virtual_memory_bytes) > 0.9
+          expr: (process_resident_memory_bytes / process_virtual_memory_bytes) > 0.7
           for: 1m
           labels:
             severity: warning
           annotations:
-            summary: "Memory usage exceeds 90%"
+            summary: "Memory usage exceeds 70%"
+    
+    - name: test-alert-group
+      rules:
+        - alert: AlwaysFiringTestAlert
+          expr: vector(1) # always evaluates to true, causing the alert to fire
+          for: 1m
+          labels:
+            severity: info
+          annotations:
+            summary: "This is a test alert"
+            description: "This alert is firing to test email alerting"
 
 
 

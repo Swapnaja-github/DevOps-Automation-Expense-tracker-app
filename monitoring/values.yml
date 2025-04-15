@@ -1,0 +1,5 @@
+# Modify the kube-prometheus-stack Helm chart Values to ensure Alertmanager uses the alertmanager-config ConfigMap
+# helm upgrade kube-prometheus-stack prometheus-community/kube-prometheus-stack -f values.yml -n monitoring
+alertmanager:
+  configMapOverrideName: alertmanager-config
+  enabled: true
