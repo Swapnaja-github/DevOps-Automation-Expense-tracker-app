@@ -16,3 +16,6 @@ spec:
     - port: http
       path: /metrics # scrape the /metrics path on port named http every 15 seconds
       interval: "15s"
+      honorLabels: true
+  targetLabels:
+  - app # For better visibility in /targets
