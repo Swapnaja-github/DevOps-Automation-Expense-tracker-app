@@ -4,27 +4,30 @@ metadata:
   name: expensy-ingress
   namespace: expensy
   annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    nginx.ingress.kubernetes.io/enable-access-log: "true"
+    # Basic cert-manager configuration
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
     cert-manager.io/ingress.class: nginx  # 👈 This tells cert-manager which controller to use
+    
+    # Security exceptions
+    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/satisfy: "any"  # Bypass other restrictions for ACME
+    
+
 spec:
-  ingressClassName: nginx
+  ingressClassName:  "nginx"
   # Cert-Manager creates a Certificate resource in the background automatically
   tls:
   - hosts:
     - najhack.online
+    - api.najhack.online
     secretName: expensy-tls  # cert will be stored here 
   rules:
     - host: najhack.online
       http:
         paths:
-          # - path: /expensy
-          #   pathType: Prefix
-          #   backend:
-          #     service:
-          #       name: frontend-service
-          #       port:
-          #         number: 3000
           - path: /
             pathType: Prefix
             backend:
@@ -32,6 +35,9 @@ spec:
                 name: frontend-service
                 port:
                   number: 3000
+    - host: api.najhack.online
+      http:
+        paths:
           - path: /api
             pathType: Prefix
             backend:
