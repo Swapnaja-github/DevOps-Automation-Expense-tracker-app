@@ -3,8 +3,15 @@ kind: Ingress
 metadata:
   name: expensy-ingress
   namespace: expensy
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
   ingressClassName: nginx
+  # Cert-Manager creates a Certificate resource in the background automatically
+  tls:
+  - hosts:
+    - najhack.online
+    secretName: expensy-tls  # cert will be stored here 
   rules:
     - host: najhack.online
       http:
