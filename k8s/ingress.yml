@@ -11,6 +11,7 @@ spec:
   tls:
   - hosts:
     - najhack.online
+    - api.najhack.online
     secretName: expensy-tls  # cert will be stored here 
   rules:
     - host: najhack.online
