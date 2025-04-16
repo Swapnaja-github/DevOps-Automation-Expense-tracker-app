@@ -1,5 +1,34 @@
-# Modify the kube-prometheus-stack Helm chart Values to ensure Alertmanager uses the alertmanager-config ConfigMap
-# helm upgrade kube-prometheus-stack prometheus-community/kube-prometheus-stack -f values.yml -n monitoring
+# helm upgrade kube-prometheus-stack prometheus-community/kube-prometheus-stack -n monitoring -f values.yml
 alertmanager:
-  configMapOverrideName: alertmanager-config
-  enabled: true
+  config:
+    global:
+      smtp_smarthost: 'smtp.hostinger.com:587'
+      smtp_from: 'monitoring@dionamite.com'
+      smtp_auth_username: 'monitoring@dionamite.com'
+      smtp_auth_password: 'Ironhack1!'
+      smtp_require_tls: true
+    route:
+      receiver: email-alerts
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 1h
+    receivers:
+      - name: email-alerts
+        email_configs:
+          - to: 'monitoring@dionamite.com'
+            send_resolved: true
+
+prometheus:
+  prometheusSpec:
+    alertingEndpoints:
+      - name: alertmanager
+        namespace: monitoring
+        port: web
+        pathPrefix: /
+        apiVersion: v2
+  alerting:
+    alertmanagers:
+      - static_configs:
+          - targets:
+              - kube-prometheus-stack-alertmanager.monitoring.svc:9093
+
