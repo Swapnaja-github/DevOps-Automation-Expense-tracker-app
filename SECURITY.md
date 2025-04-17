@@ -8,7 +8,7 @@ This project follows the principle of **least privilege**, using **Role-Based Ac
 ### 1. **Role-Based Access Control (RBAC)**
 For Azure resources, we use Azure RBAC to define access levels for service principals, users, and groups.
 
-#### RBAC (Role-Based Access Control) is enabled in the Kubernetes cluster. Verified by running:
+### RBAC (Role-Based Access Control) is enabled in the Kubernetes cluster. Verified by running:
 
 ```kubectl api-resources | grep rbac```
  Output confirms presence of:
@@ -19,7 +19,7 @@ For Azure resources, we use Azure RBAC to define access levels for service princ
 
 This ensures fine-grained access control is in place for users and service accounts in the cluster.
 
-#### Namespaced Role: my-nginx-ingress-controller-ingress-nginx
+### Namespaced Role: my-nginx-ingress-controller-ingress-nginx
 RBAC role assigned to the Nginx Ingress Controller in the expensy namespace:
 
 ```kubectl get role my-nginx-ingress-controller-ingress-nginx -n expensy -o yaml```
@@ -70,26 +70,30 @@ Sensitive information, such as API keys, credentials, and tokens, is stored secu
   "galleryEndpointUrl": "https://gallery.azure.com/",
   "managementEndpointUrl": "https://management.core.windows.net/"
 }
+```
 ---
 
 ### ✅  Kubernetes Secrets Setup:
-
- ```kubectl create secret generic expensy-secrets \
+    ```
+    kubectl create secret generic expensy-secrets \
 	  --from-literal=KEY_NAME="redis" \
 	  --from-literal=KEY_NAME="redis-password" \
       --from-literal=KEY_NAME="mongodb" \
 	  --from-literal=KEY_NAME="mongodb-password" \
       --from-literal=KEY_NAME="database-URL" \
 	  --from-literal=KEY_NAME="database-URL-link" \
-	  -n expensy```
+	  -n expensy
+    ```
 
 Then in your microservice Deployment manifests, you can reference them like:
- ```env:
+ ```
+   env:
     - name: REDIS_PASSWORD
       valueFrom:
         secretKeyRef:
           name: expensy-secrets
-          key: redis-password```
+          key: redis-password
+ ```
 
 
 ### Secret Handling

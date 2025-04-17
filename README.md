@@ -1,174 +1,179 @@
 <!-- Final Project: End-to-End DevOps Deployment -->
+# 💸 Expensy - Expense Tracker App
 
-## Lesson Overview :pencil2:
+Expensy is a full-stack expense tracking application built with **Next.js** (frontend) and **Node.js/Express** (backend), containerized with **Docker**, deployed to **Kubernetes (EKS/AKS)**, and integrated with **Prometheus/Grafana** for monitoring.
 
-In this project, we will focus on the hands-on implementation of the learnings throughout this program, where you will gain practical insights while setting up the entire DevOps cycle and deploying applications using acquired best practices. 
-
+# Objectives :
+1. Apply DevOps practices to build and manage a full-stack application in a production-grade environment
+2. Design and implement a CI/CD pipeline using GitHub Actions to automate application delivery
+3. Containerize frontend and backend services using Docker
+4. Deploy and orchestrate containerized applications using Kubernetes on Azure Kubernetes Service (AKS)
+5. Configure NGINX Ingress for routing external HTTP(S) traffic to microservices
+6. Set up real-time monitoring and dashboards using Prometheus and Grafana
 <br>
 
-## Learning Objectives :notebook:
+# Pre-requisites
 
-By the end of this project, you will: 
+- Docker & Docker Compose
+- Node.js & npm
+- MongoDB & Redis (local or containers)
 
-1. Apply DevOps practices to a real-world project in a production environment.
-2. Build an effective CI/CD pipeline to automate delivery.
-3. Automate provisioning, configuration and infrastructure management using Terraform and Ansible. 
-4. Deploy and manage containerized applications using Kubernetes. 
-5. Integrate applications with Managed Kubernetes Service and other cloud services
-6. Set up monitoring and create dashboards using Grafana and Prometheus
-7. Resolve issues arising during the entire cycle using best practices
+# 🌐 Web Application Overview
 
-<br>
+The application is an Expense Tracker and consists of multiple services built with different languages and technologies, simulating real-world scenarios where various components interact within a microservices architecture. The application includes:
 
-## Project Highlights :key:
-
-### Product Management:
-
-1. This capstone project is a team project, where you will assume roles and work as a scrum team. 
-2. The following indicators will be helpful for the successful completion of your project:         
-    - The duration of one Sprint Cycle is 5 days. So, you will have three Sprint Cycles for this project.
-    - Start with identifying a Scrum Master within your team.
-    - Make sure to follow all scrum events like Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospection.
-    - Plan a Sprint Review at the end of every Sprint Cycle.
-3. Your instructor will be the product owner. If you have any questions regarding the requirements or deliverables, you can address them to the Product Owner.
-4. **Suggestion:** Start with a Team Agreement 
-    - Decide your working hours
-    - Decide your definition of done
-    - Decide your team’s way of work
-    - Identify the time when you will have your scrum events like daily scrum, sprint review, and other scrum events 
-5. We will make use of Azure Boards (or JIRA boards or any other similar tool) to manage work
-6. Please ensure that you have your Daily Scrum and evening sync-up (daily retrospective) every day.
-7. The final sprint review and respective presentations will be held on the last day of the project (during the second half).
-
-<br>
-
-### Pre-requisites
-
-1. You can use any cloud of your choice (AWS, Azure or Hybrid). Make sure to have an account with free-trial or an account with enough credit.
-2. Create a free account on the DockerHub registry. This account will be used to host docker images used in the project
-
-### Web Application Introduction
+| Component    | Description                                      |
+|--------------|--------------------------------------------------|
+| Frontend     | Built with **Next.js** – web interface           |
+| Backend      | Built with **Node.js/Express** – API logic       |
+| MongoDB      | Persistent data storage                          |
+| Redis        | In-memory cache for speed                        |
 
 This sample application is an Expense Tracker with four microservices, a backend built in node, frontend built with Next.js (Node based framework), along with a MongoDB database and Redis caching DB.
 
 [Clone this repository and share it with the team](https://github.com/saurabhd2106/devops-final-project.git)
 
-Your task is to build a solution for this application that is scalable and can support zero to thousands of users. 
 
-### Make sure to use the following:
+# 🧪 Local Development Setup
 
-#### 1. Infrastructure as Code (IaC):
+## 1️⃣ Backend
+  ``` 
+      npm install
+      npm run build
+  ```
 
-- Use Terraform, AWS CloudFormation, or another IaC tool to define your infrastructure.
+## 2️⃣ Redis Container
+ ```docker run --name redis -d -p 6379:6379   redis:latest   redis-server --requirepass someredispassword```
 
-#### 2. Your infrastructure should include:
+## 3️⃣ MongoDB Container
+```docker run --name mongo -d -p 27017:27017   -e MONGO_INITDB_ROOT_USERNAME=root   -e MONGO_INITDB_ROOT_PASSWORD=example   mongo:latest```
 
-- Compute resources (e.g., EC2 instances, Kubernetes clusters).
-- Networking resources (e.g., VPC, subnets, security groups).
-- Storage resources (e.g., S3 buckets, RDS instances).
-- Continuous Integration/Continuous Deployment (CI/CD):
-
-#### 3. Implement a CI/CD pipeline using tools such as Jenkins, GitLab CI, or GitHub Actions.
-
-The pipeline should:
-- Automatically build and test your application.
-- Deploy the application to a staging environment.
-- Deploy to production upon approval.
-
-#### 4. Containerization and Orchestration:
-- Containerize your application using Docker.
-- Use Kubernetes or Docker Swarm for orchestration to ensure your application can scale horizontally.
-
-#### 5. Monitoring and Logging:
-
-- Implement monitoring using tools like Prometheus, Grafana, or AWS CloudWatch.
-
-#### 6. Autoscaling:
-
-- Configure autoscaling for your compute resources (e.g., AWS Auto Scaling groups, Kubernetes Horizontal Pod Autoscaler) to handle varying loads.
-
-#### 7. Security and Compliance:
-
-- Implement best security practices, including network security (firewalls, security groups), data encryption, and IAM policies.
-- Ensure compliance with relevant standards (e.g., GDPR, HIPAA) as applicable.
-
-### Deliverables:
-
-#### 1. Infrastructure Code:
-
-- Provide all IaC scripts and configuration files like Terraform scripts, AWS CloudFormation templates, Ansible playbooks, etc.
-- Include documentation explaining the infrastructure setup and how to deploy it.
-
-#### 2. CI/CD Pipeline Configuration:
-
-- Provide the CI/CD pipeline configuration files like Jenkinsfile, GitHub Actions workflows, etc.
-- Include detailed documentation on how to set up and use the pipeline.
-
-#### 3. Application Containerization and Orchestration:
-
-- Provide Dockerfiles and Kubernetes/Docker Swarm configuration files.
-- Include documentation on how to build and deploy the containers.
-
-#### 4. Monitoring and Logging Configuration:
-
-- Provide configuration files for monitoring and logging tools, including Prometheus configuration, Grafana dashboards, ELK stack configuration, etc.
-- Include documentation on how to set up and interpret the monitoring and logging data.
-
-#### 5. Autoscaling Configuration:
-
-- Provide configuration files or scripts for autoscaling.
-- Include documentation explaining the autoscaling policies, criteria for scaling, how to simulate load to test autoscaling, commands to check the current scaling status, etc. 
-
-#### 6. Security and Compliance Documentation:
-
-- Provide a security overview document detailing the measures implemented.
-- Include compliance checklists and how your solution adheres to them.
-
-### Evaluation Criteria:
-
-1. Scalability:
-
-- The solution should handle increasing loads efficiently.
-- Autoscaling should work as expected, without degrading performance.
-- Infrastructure should be able to scale horizontally (adding more instances) or vertically (upgrading existing instances) as needed.
-
-2. Reliability:
-
-- The CI/CD pipeline should deploy the application without errors.
-- Monitoring and logging should provide useful insights into the application’s health.
-- The pipeline should be ready for smooth integration of new code and features.
-
-3. Security:
-
-- The solution should follow best security practices.
-- Compliance with relevant standards should be documented.
-
-4. Documentation:
-
-- The documentation should be clear and comprehensive documentation for each component.
-- Ease of understanding and reproducibility must be considered while documenting all components. 
-
-<!-- ## Additional Resources :clipboard: 
-
-If you would like to study these concepts before the class or would benefit from some remedial studying, please utilize the resources below: -->
-
-<br>
-
-**Good luck!**
+## 4️⃣ Frontend
+```npm run dev```
 
 
-### Install Cert-Manager-
+# Step 1 - 🐳 Dockerized Setup:
+This project uses **GitHub Actions** to automate Docker image builds and deployment preparation for both frontend and backend.The steps below will be executed inside a CI pipeline of the project.
 
-## Add Cert-Manager via Helm
+## 1.1 Containerize the services (frontend,backend) using Docker.
 
-# Add the JetStack Helm repository
-''' helm repo add jetstack https://charts.jetstack.io '''
-''' helm repo update '''
+### Backend(node.js)
+```
+cd expensy_backend
+docker build -t backend:latest .
+docker run -p 8706:8706 backend:latest
+```
+### Frontend(next.js)
+```
+cd expensy_frontend
+docker build -t frontend:latest .
+docker run -p 3000:3000 frontend:latest
+```
+Visit http://localhost:3000 to see the expensy app running in Docker.
 
-# Install Cert-Manager with CRDs
-'''helm install cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --create-namespace \
-  --version v1.11.0 \
-  --set installCRDs=true'''
+## 1.2 Orchestrate multi-service deployments with Docker Compose (for single-machine deployments).
+To manage and run all services (frontend,backend, redis, and mongodb) together, create a docker-compose.yml file in root directory of the Microservices project. It sets up networks and volumes, ensuring seamless communication between containers.
+
+```docker compose up -d --build```
+
+This will:
+
+Start Redis and Mongodb
+Build and run frontend and backend.
+
+Access the Application:
+
+Expensy App: http://localhost:3000
+
+
+# Step 2- Kubernetes Deployment-
+
+## 1.1. Cluster deployment via bicep file 
+ 1. Create-rg.bicep
+
+ Deploy this at the subscription level:
+```
+az deployment sub create \
+  --location uaenorth \
+  --template-file create-rg.bicep
+```
+
+2. Create aks-cluster.bicep
+
+Deploy it at the resource group level:
+```
+az deployment group create \
+  --resource-group expensyAksRG \
+  --template-file aks-cluster.bicep \
+  --parameters sshPublicKey="$(cat ~/.ssh/id_rsa.pub)"
+```
+If necessary:
+``` ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa```
+
+3. Get credentials for kubectl access
+```az aks get-credentials --resource-group expensyAksRG --name expensyAksCluster ```
+
+## 1.2 Kubernetes Manifests
+Create separate Deployment and Service YAML files for each microservice. Secrets/configs are stored via Kubernetes Secrets.
+
+For backend specify the environment variables for mongodb and redis-
+
+        ```
+          env:           
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: expensy-secrets
+                  key: DATABASE_URI
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_HOST
+              value: "redis-service" # Reference the corresponding service name
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: expensy-secrets
+                  key: redis-password
+        ```
+
+# Step 3- CI/CD Pipeline-
+ GitHub Actions workflow is defined at:
+
+.github/workflows/CI-pipeline.yaml
+.github/workflows/CD-pipeline.yaml
+
+# Step 4- Test the project:
+
+Once the CI-CD pipelines runs successfully, confirm:
+
+All Deployments and Pods are running:
+
+```kubectl get deployments```
+```kubectl get pods```
+
+The NGINX Ingress has an external IP or DNS address:
+
+```kubectl get ingress```
+
+Access the app:
+
+http://<INGRESS_IP>
+
+Test the flow: Add expense and see if the expense data is stored.
+
+# Step 5- Monitoring & Logging:
+## Monitoring Stack
+ Configured Prometheus to scrape metrics from pods
+ Used node-exporter to scrape system level metrics
+
+## Grafana dashboards:
+Sample visualizations and alerting setup is included.
+
+
+# Step 6- Security and Compliance:
+  Secrets are managed via Kubernetes Secrets
+  IAM roles used for cloud access 
+  Mongo/Redis passwords never committed
+  See ```SECURITY.md``` for more
+
 
