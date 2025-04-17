@@ -155,3 +155,20 @@ If you would like to study these concepts before the class or would benefit from
 <br>
 
 **Good luck!**
+
+
+### Install Cert-Manager-
+
+## Add Cert-Manager via Helm
+
+# Add the JetStack Helm repository
+''' helm repo add jetstack https://charts.jetstack.io '''
+''' helm repo update '''
+
+# Install Cert-Manager with CRDs
+'''helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.11.0 \
+  --set installCRDs=true'''
+
