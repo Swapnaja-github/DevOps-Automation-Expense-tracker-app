@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
         - name: backend-container
-          image: sjagtap0/backend
+          image: sjagtap0/backend:new
+          imagePullPolicy: Always
           ports:
             - containerPort: 8706
           env:           
