@@ -1,3 +1,5 @@
 .env
 secrets.yml_
 es
+k8s/ingress-new.yml
+k8s/secrets.yml

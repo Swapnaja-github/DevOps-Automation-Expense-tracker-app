@@ -20,7 +20,7 @@ az vm list-usage --location uaenorth -o table
 az aks create \
   --resource-group expensyAksRG \
   --name expensyAksCluster \
-  --node-count 3 \
+  --node-count 2 \
   --node-vm-size Standard_DS2_v2 \
   --enable-addons monitoring \
   --generate-ssh-keys \

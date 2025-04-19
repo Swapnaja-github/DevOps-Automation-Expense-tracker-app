@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend-container
-          image: sjagtap0/frontend
+          image: sjagtap0/frontend:new
           imagePullPolicy: Always
           ports:
             - containerPort: 3000 # overwrites the port exposed in frontend Docker file
