@@ -25,7 +25,8 @@ spec:
               secretKeyRef:
                 name: expensy-secrets
                 key: redis-password # the key inside the Kubernetes Secret's data
-        command: ["redis-server", "--requirepass", "$(REDIS_PASSWORD)"]
+        command: [ "sh", "-c" ]
+        args: [ "redis-server --requirepass \"$REDIS_PASSWORD\"" ]
         volumeMounts:
         - name: redis-storage
           mountPath: /data
