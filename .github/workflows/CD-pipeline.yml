@@ -10,7 +10,7 @@
         types:
           - completed
         branches:
-          - dev
+          - swap-feature-branch
        
     jobs:
       deploy:
