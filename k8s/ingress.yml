@@ -3,22 +3,30 @@ kind: Ingress
 metadata:
   name: expensy-ingress
   namespace: expensy
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
+   tls:
+  - hosts:
+    - swapnaja.store
+    secretName: my-tls-secret
   rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: frontend-service
-                port:
-                  number: 3000
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: backend-service  # Backend service for path /api
-                port:
-                  number: 8706  # Port exposed by the backend service
+  - host: swapnaja.store
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 3000
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-service  # Backend service for path /api
+            port:
+              number: 8706  # Port exposed by the backend service
